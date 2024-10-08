@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>videflix.migrations package &#8212; Videoflix 03.10.2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=12dfc556" />
+    <script src="../../_static/documentation_options.js?v=4e3e0493"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="videflix-migrations-package">
+<h1>videflix.migrations package<a class="headerlink" href="#videflix-migrations-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-videflix.migrations.0001_initial">
+<span id="videflix-migrations-0001-initial-module"></span><h2>videflix.migrations.0001_initial module<a class="headerlink" href="#module-videflix.migrations.0001_initial" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="videflix.migrations.0001_initial.Migration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">videflix.migrations.0001_initial.</span></span><span class="sig-name descname"><span class="pre">Migration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/videflix/migrations/0001_initial.html#Migration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#videflix.migrations.0001_initial.Migration" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Migration</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0001_initial.Migration.dependencies">
+<span class="sig-name descname"><span class="pre">dependencies</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('auth',</span> <span class="pre">'0012_alter_user_first_name_max_length')]</span></em><a class="headerlink" href="#videflix.migrations.0001_initial.Migration.dependencies" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0001_initial.Migration.initial">
+<span class="sig-name descname"><span class="pre">initial</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#videflix.migrations.0001_initial.Migration.initial" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0001_initial.Migration.operations">
+<span class="sig-name descname"><span class="pre">operations</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;CreateModel</span>&#160; <span class="pre">name='CustomUser',</span> <span class="pre">fields=[('id',</span> <span class="pre">&lt;django.db.models.fields.BigAutoField&gt;),</span> <span class="pre">('password',</span> <span class="pre">&lt;django.db.models.fields.CharField&gt;),</span> <span class="pre">('last_login',</span> <span class="pre">&lt;django.db.models.fields.DateTimeField&gt;),</span> <span class="pre">('is_superuser',</span> <span class="pre">&lt;django.db.models.fields.BooleanField&gt;),</span> <span class="pre">('email',</span> <span class="pre">&lt;django.db.models.fields.EmailField&gt;),</span> <span class="pre">('is_active',</span> <span class="pre">&lt;django.db.models.fields.BooleanField&gt;),</span> <span class="pre">('is_staff',</span> <span class="pre">&lt;django.db.models.fields.BooleanField&gt;),</span> <span class="pre">('groups',</span> <span class="pre">&lt;django.db.models.fields.related.ManyToManyField&gt;),</span> <span class="pre">('user_permissions',</span> <span class="pre">&lt;django.db.models.fields.related.ManyToManyField&gt;)],</span> <span class="pre">options={'abstract':</span> <span class="pre">False}&gt;,</span> <span class="pre">&lt;CreateModel</span>&#160; <span class="pre">name='Profile',</span> <span class="pre">fields=[('id',</span> <span class="pre">&lt;django.db.models.fields.BigAutoField&gt;),</span> <span class="pre">('bio',</span> <span class="pre">&lt;django.db.models.fields.TextField&gt;),</span> <span class="pre">('location',</span> <span class="pre">&lt;django.db.models.fields.CharField&gt;),</span> <span class="pre">('birth_date',</span> <span class="pre">&lt;django.db.models.fields.DateField&gt;),</span> <span class="pre">('user',</span> <span class="pre">&lt;django.db.models.fields.related.OneToOneField&gt;)]&gt;]</span></em><a class="headerlink" href="#videflix.migrations.0001_initial.Migration.operations" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-videflix.migrations.0002_customuser_date_joined">
+<span id="videflix-migrations-0002-customuser-date-joined-module"></span><h2>videflix.migrations.0002_customuser_date_joined module<a class="headerlink" href="#module-videflix.migrations.0002_customuser_date_joined" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="videflix.migrations.0002_customuser_date_joined.Migration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">videflix.migrations.0002_customuser_date_joined.</span></span><span class="sig-name descname"><span class="pre">Migration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/videflix/migrations/0002_customuser_date_joined.html#Migration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#videflix.migrations.0002_customuser_date_joined.Migration" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Migration</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0002_customuser_date_joined.Migration.dependencies">
+<span class="sig-name descname"><span class="pre">dependencies</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('videflix',</span> <span class="pre">'0001_initial')]</span></em><a class="headerlink" href="#videflix.migrations.0002_customuser_date_joined.Migration.dependencies" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0002_customuser_date_joined.Migration.operations">
+<span class="sig-name descname"><span class="pre">operations</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;AddField</span>&#160; <span class="pre">model_name='customuser',</span> <span class="pre">name='date_joined',</span> <span class="pre">field=&lt;django.db.models.fields.DateTimeField&gt;&gt;]</span></em><a class="headerlink" href="#videflix.migrations.0002_customuser_date_joined.Migration.operations" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-videflix.migrations.0003_loginhistory">
+<span id="videflix-migrations-0003-loginhistory-module"></span><h2>videflix.migrations.0003_loginhistory module<a class="headerlink" href="#module-videflix.migrations.0003_loginhistory" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="videflix.migrations.0003_loginhistory.Migration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">videflix.migrations.0003_loginhistory.</span></span><span class="sig-name descname"><span class="pre">Migration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/videflix/migrations/0003_loginhistory.html#Migration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#videflix.migrations.0003_loginhistory.Migration" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Migration</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0003_loginhistory.Migration.dependencies">
+<span class="sig-name descname"><span class="pre">dependencies</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('videflix',</span> <span class="pre">'0002_customuser_date_joined')]</span></em><a class="headerlink" href="#videflix.migrations.0003_loginhistory.Migration.dependencies" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0003_loginhistory.Migration.operations">
+<span class="sig-name descname"><span class="pre">operations</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;CreateModel</span>&#160; <span class="pre">name='LoginHistory',</span> <span class="pre">fields=[('id',</span> <span class="pre">&lt;django.db.models.fields.BigAutoField&gt;),</span> <span class="pre">('token',</span> <span class="pre">&lt;django.db.models.fields.CharField&gt;),</span> <span class="pre">('timestamp',</span> <span class="pre">&lt;django.db.models.fields.DateTimeField&gt;),</span> <span class="pre">('ip_address',</span> <span class="pre">&lt;django.db.models.fields.GenericIPAddressField&gt;),</span> <span class="pre">('user_agent',</span> <span class="pre">&lt;django.db.models.fields.TextField&gt;),</span> <span class="pre">('user',</span> <span class="pre">&lt;django.db.models.fields.related.ForeignKey&gt;)]&gt;]</span></em><a class="headerlink" href="#videflix.migrations.0003_loginhistory.Migration.operations" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-videflix.migrations.0004_video">
+<span id="videflix-migrations-0004-video-module"></span><h2>videflix.migrations.0004_video module<a class="headerlink" href="#module-videflix.migrations.0004_video" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="videflix.migrations.0004_video.Migration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">videflix.migrations.0004_video.</span></span><span class="sig-name descname"><span class="pre">Migration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/videflix/migrations/0004_video.html#Migration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#videflix.migrations.0004_video.Migration" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Migration</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0004_video.Migration.dependencies">
+<span class="sig-name descname"><span class="pre">dependencies</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('videflix',</span> <span class="pre">'0003_loginhistory')]</span></em><a class="headerlink" href="#videflix.migrations.0004_video.Migration.dependencies" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0004_video.Migration.operations">
+<span class="sig-name descname"><span class="pre">operations</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;CreateModel</span>&#160; <span class="pre">name='Video',</span> <span class="pre">fields=[('id',</span> <span class="pre">&lt;django.db.models.fields.BigAutoField&gt;),</span> <span class="pre">('created_at',</span> <span class="pre">&lt;django.db.models.fields.DateField&gt;),</span> <span class="pre">('title',</span> <span class="pre">&lt;django.db.models.fields.CharField&gt;),</span> <span class="pre">('description',</span> <span class="pre">&lt;django.db.models.fields.CharField&gt;),</span> <span class="pre">('video_file',</span> <span class="pre">&lt;django.db.models.fields.files.FileField&gt;)]&gt;]</span></em><a class="headerlink" href="#videflix.migrations.0004_video.Migration.operations" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-videflix.migrations.0005_video_category">
+<span id="videflix-migrations-0005-video-category-module"></span><h2>videflix.migrations.0005_video_category module<a class="headerlink" href="#module-videflix.migrations.0005_video_category" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="videflix.migrations.0005_video_category.Migration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">videflix.migrations.0005_video_category.</span></span><span class="sig-name descname"><span class="pre">Migration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/videflix/migrations/0005_video_category.html#Migration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#videflix.migrations.0005_video_category.Migration" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Migration</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0005_video_category.Migration.dependencies">
+<span class="sig-name descname"><span class="pre">dependencies</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('videflix',</span> <span class="pre">'0004_video')]</span></em><a class="headerlink" href="#videflix.migrations.0005_video_category.Migration.dependencies" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0005_video_category.Migration.operations">
+<span class="sig-name descname"><span class="pre">operations</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;AddField</span>&#160; <span class="pre">model_name='video',</span> <span class="pre">name='category',</span> <span class="pre">field=&lt;django.db.models.fields.CharField&gt;&gt;]</span></em><a class="headerlink" href="#videflix.migrations.0005_video_category.Migration.operations" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-videflix.migrations.0006_video_thumbnail">
+<span id="videflix-migrations-0006-video-thumbnail-module"></span><h2>videflix.migrations.0006_video_thumbnail module<a class="headerlink" href="#module-videflix.migrations.0006_video_thumbnail" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="videflix.migrations.0006_video_thumbnail.Migration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">videflix.migrations.0006_video_thumbnail.</span></span><span class="sig-name descname"><span class="pre">Migration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/videflix/migrations/0006_video_thumbnail.html#Migration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#videflix.migrations.0006_video_thumbnail.Migration" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Migration</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0006_video_thumbnail.Migration.dependencies">
+<span class="sig-name descname"><span class="pre">dependencies</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('videflix',</span> <span class="pre">'0005_video_category')]</span></em><a class="headerlink" href="#videflix.migrations.0006_video_thumbnail.Migration.dependencies" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0006_video_thumbnail.Migration.operations">
+<span class="sig-name descname"><span class="pre">operations</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;AddField</span>&#160; <span class="pre">model_name='video',</span> <span class="pre">name='thumbnail',</span> <span class="pre">field=&lt;django.db.models.fields.files.ImageField&gt;&gt;]</span></em><a class="headerlink" href="#videflix.migrations.0006_video_thumbnail.Migration.operations" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-videflix.migrations.0007_video_video_file_1080p_video_video_file_360p_and_more">
+<span id="videflix-migrations-0007-video-video-file-1080p-video-video-file-360p-and-more-module"></span><h2>videflix.migrations.0007_video_video_file_1080p_video_video_file_360p_and_more module<a class="headerlink" href="#module-videflix.migrations.0007_video_video_file_1080p_video_video_file_360p_and_more" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="videflix.migrations.0007_video_video_file_1080p_video_video_file_360p_and_more.Migration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">videflix.migrations.0007_video_video_file_1080p_video_video_file_360p_and_more.</span></span><span class="sig-name descname"><span class="pre">Migration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/videflix/migrations/0007_video_video_file_1080p_video_video_file_360p_and_more.html#Migration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#videflix.migrations.0007_video_video_file_1080p_video_video_file_360p_and_more.Migration" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Migration</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0007_video_video_file_1080p_video_video_file_360p_and_more.Migration.dependencies">
+<span class="sig-name descname"><span class="pre">dependencies</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('videflix',</span> <span class="pre">'0006_video_thumbnail')]</span></em><a class="headerlink" href="#videflix.migrations.0007_video_video_file_1080p_video_video_file_360p_and_more.Migration.dependencies" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="videflix.migrations.0007_video_video_file_1080p_video_video_file_360p_and_more.Migration.operations">
+<span class="sig-name descname"><span class="pre">operations</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;AddField</span>&#160; <span class="pre">model_name='video',</span> <span class="pre">name='video_file_1080p',</span> <span class="pre">field=&lt;django.db.models.fields.files.FileField&gt;&gt;,</span> <span class="pre">&lt;AddField</span>&#160; <span class="pre">model_name='video',</span> <span class="pre">name='video_file_360p',</span> <span class="pre">field=&lt;django.db.models.fields.files.FileField&gt;&gt;,</span> <span class="pre">&lt;AddField</span>&#160; <span class="pre">model_name='video',</span> <span class="pre">name='video_file_480p',</span> <span class="pre">field=&lt;django.db.models.fields.files.FileField&gt;&gt;,</span> <span class="pre">&lt;AddField</span>&#160; <span class="pre">model_name='video',</span> <span class="pre">name='video_file_720p',</span> <span class="pre">field=&lt;django.db.models.fields.files.FileField&gt;&gt;,</span> <span class="pre">&lt;AlterField</span>&#160; <span class="pre">model_name='video',</span> <span class="pre">name='category',</span> <span class="pre">field=&lt;django.db.models.fields.CharField&gt;&gt;,</span> <span class="pre">&lt;AlterField</span>&#160; <span class="pre">model_name='video',</span> <span class="pre">name='created_at',</span> <span class="pre">field=&lt;django.db.models.fields.DateField&gt;&gt;,</span> <span class="pre">&lt;AlterField</span>&#160; <span class="pre">model_name='video',</span> <span class="pre">name='description',</span> <span class="pre">field=&lt;django.db.models.fields.TextField&gt;&gt;,</span> <span class="pre">&lt;AlterField</span>&#160; <span class="pre">model_name='video',</span> <span class="pre">name='thumbnail',</span> <span class="pre">field=&lt;django.db.models.fields.files.ImageField&gt;&gt;,</span> <span class="pre">&lt;AlterField</span>&#160; <span class="pre">model_name='video',</span> <span class="pre">name='title',</span> <span class="pre">field=&lt;django.db.models.fields.CharField&gt;&gt;,</span> <span class="pre">&lt;AlterField</span>&#160; <span class="pre">model_name='video',</span> <span class="pre">name='video_file',</span> <span class="pre">field=&lt;django.db.models.fields.files.FileField&gt;&gt;]</span></em><a class="headerlink" href="#videflix.migrations.0007_video_video_file_1080p_video_video_file_360p_and_more.Migration.operations" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-videflix.migrations">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-videflix.migrations" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Videoflix</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Fabian.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../../_sources/docs/source/videflix.migrations.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

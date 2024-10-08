@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>videflix.serializers &#8212; Videoflix 03.10.2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=12dfc556" />
+    <script src="../../_static/documentation_options.js?v=4e3e0493"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for videflix.serializers</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">get_user_model</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">serializers</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Video</span>
+
+<div class="viewcode-block" id="UserRegistrationSerializer">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.serializers.UserRegistrationSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">UserRegistrationSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Serializer for user registration, handles creating a new user with an email and password.</span>
+
+<span class="sd">    Fields:</span>
+<span class="sd">        - email: The user&#39;s email address (required).</span>
+<span class="sd">        - password: The user&#39;s password (write-only, required).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">write_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<div class="viewcode-block" id="UserRegistrationSerializer.Meta">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.serializers.UserRegistrationSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="UserRegistrationSerializer.create">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.serializers.UserRegistrationSerializer.create">[docs]</a>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validated_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new user with the provided email and password.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            validated_data (dict): Contains the validated user data.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            user (CustomUser): The created user instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
+            <span class="n">email</span><span class="o">=</span><span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+            <span class="n">password</span><span class="o">=</span><span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">user</span></div>
+</div>
+
+    
+
+<div class="viewcode-block" id="VideoSerializer">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.serializers.VideoSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">VideoSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Serializer for Video objects, handles serialization of video metadata and files.</span>
+
+<span class="sd">    Fields:</span>
+<span class="sd">        - id: The unique identifier for the video.</span>
+<span class="sd">        - title: The title of the video.</span>
+<span class="sd">        - description: A brief description of the video.</span>
+<span class="sd">        - video_file: The original video file.</span>
+<span class="sd">        - video_file_360p: The 360p version of the video.</span>
+<span class="sd">        - video_file_480p: The 480p version of the video.</span>
+<span class="sd">        - video_file_720p: The 720p version of the video.</span>
+<span class="sd">        - video_file_1080p: The 1080p version of the video.</span>
+<span class="sd">        - thumbnail: A thumbnail image for the video.</span>
+<span class="sd">        - category: The category to which the video belongs.</span>
+<span class="sd">        - created_at: The date and time when the video was uploaded.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">thumbnail</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_url</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">video_file</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_url</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<div class="viewcode-block" id="VideoSerializer.Meta">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.serializers.VideoSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Video</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;video_file&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;video_file_360p&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;video_file_480p&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;video_file_720p&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;video_file_1080p&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;thumbnail&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;created_at&#39;</span><span class="p">,</span>
+        <span class="p">]</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Videoflix</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Fabian.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

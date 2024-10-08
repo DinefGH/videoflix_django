@@ -1,0 +1,10 @@
+[run]
+omit =
+    */tests/*    # Exclude all test files
+
+[report]
+exclude_lines =
+    # Exclude the following lines from coverage reports:
+    pragma: no cover
+    def __repr__
+    if __name__ == .__main__.:

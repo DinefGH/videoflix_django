@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>videflix.signals &#8212; Videoflix 03.10.2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=12dfc556" />
+    <script src="../../_static/documentation_options.js?v=4e3e0493"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for videflix.signals</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">django.db.models.signals</span> <span class="kn">import</span> <span class="n">post_save</span><span class="p">,</span> <span class="n">post_delete</span>
+<span class="kn">from</span> <span class="nn">django.dispatch</span> <span class="kn">import</span> <span class="n">receiver</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">CustomUser</span><span class="p">,</span> <span class="n">Profile</span><span class="p">,</span> <span class="n">Video</span>
+<span class="kn">from</span> <span class="nn">videflix.tasks</span> <span class="kn">import</span> <span class="n">convert_360p</span><span class="p">,</span> <span class="n">convert_480p</span><span class="p">,</span> <span class="n">convert_720p</span><span class="p">,</span> <span class="n">convert_1080p</span>
+<span class="kn">from</span> <span class="nn">django.db.models.signals</span> <span class="kn">import</span> <span class="n">post_save</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+
+
+
+
+
+
+
+
+<div class="viewcode-block" id="create_user_profile">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.signals.create_user_profile">[docs]</a>
+<span class="nd">@receiver</span><span class="p">(</span><span class="n">post_save</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">CustomUser</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">create_user_profile</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">created</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Signal to create a Profile when a new CustomUser is created.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sender (model class): The model class sending the signal (CustomUser).</span>
+<span class="sd">        instance (CustomUser): The instance of the user being created.</span>
+<span class="sd">        created (bool): Boolean indicating if the instance is newly created.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">created</span><span class="p">:</span>
+        <span class="n">Profile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">instance</span><span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="save_user_profile">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.signals.save_user_profile">[docs]</a>
+<span class="nd">@receiver</span><span class="p">(</span><span class="n">post_save</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">CustomUser</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">save_user_profile</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Signal to save the Profile whenever the CustomUser is saved.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sender (model class): The model class sending the signal (CustomUser).</span>
+<span class="sd">        instance (CustomUser): The instance of the user being saved.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">instance</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="video_post_save">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.signals.video_post_save">[docs]</a>
+<span class="nd">@receiver</span><span class="p">(</span><span class="n">post_save</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">Video</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">video_post_save</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">created</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Signal triggered after a Video is saved, which converts and saves the video to different resolutions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sender (model class): The model class sending the signal (Video).</span>
+<span class="sd">        instance (Video): The instance of the video being saved.</span>
+<span class="sd">        created (bool): Boolean indicating if the instance is newly created.</span>
+<span class="sd">    </span>
+<span class="sd">    Conversion details:</span>
+<span class="sd">    - Converts the original video into 360p, 480p, 720p, and 1080p resolutions.</span>
+<span class="sd">    - Updates the Video instance with the paths of the converted files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Video saved&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">created</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;New video created&#39;</span><span class="p">)</span>
+        <span class="n">video_path</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">video_file</span><span class="o">.</span><span class="n">path</span>
+        <span class="n">base</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">video_path</span><span class="p">)</span>
+        
+        <span class="n">video_360p_path</span> <span class="o">=</span> <span class="n">convert_360p</span><span class="p">(</span><span class="n">video_path</span><span class="p">)</span>
+        <span class="n">video_480p_path</span> <span class="o">=</span> <span class="n">convert_480p</span><span class="p">(</span><span class="n">video_path</span><span class="p">)</span>
+        <span class="n">video_720p_path</span> <span class="o">=</span> <span class="n">convert_720p</span><span class="p">(</span><span class="n">video_path</span><span class="p">)</span>
+        <span class="n">video_1080p_path</span> <span class="o">=</span> <span class="n">convert_1080p</span><span class="p">(</span><span class="n">video_path</span><span class="p">)</span>
+    
+        <span class="k">if</span> <span class="n">video_360p_path</span><span class="p">:</span>
+            <span class="n">instance</span><span class="o">.</span><span class="n">video_file_360p</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">video_360p_path</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">video_480p_path</span><span class="p">:</span>
+            <span class="n">instance</span><span class="o">.</span><span class="n">video_file_480p</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">video_480p_path</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">video_720p_path</span><span class="p">:</span>
+            <span class="n">instance</span><span class="o">.</span><span class="n">video_file_720p</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">video_720p_path</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">video_1080p_path</span><span class="p">:</span>
+            <span class="n">instance</span><span class="o">.</span><span class="n">video_file_1080p</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">video_1080p_path</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">)</span>
+    
+        <span class="n">instance</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="auto_delete_file_on_delete">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.signals.auto_delete_file_on_delete">[docs]</a>
+<span class="nd">@receiver</span><span class="p">(</span><span class="n">post_delete</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">Video</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">auto_delete_file_on_delete</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deletes the original video file and all transcoded versions when a Video instance is deleted.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sender (model class): The model class sending the signal (Video).</span>
+<span class="sd">        instance (Video): The instance of the video being deleted.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">instance</span><span class="o">.</span><span class="n">video_file</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="n">video_file</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="n">video_file</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="n">base</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="n">video_file</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+    
+    <span class="n">resolutions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;360p&quot;</span><span class="p">,</span> <span class="s2">&quot;480p&quot;</span><span class="p">,</span> <span class="s2">&quot;720p&quot;</span><span class="p">,</span> <span class="s2">&quot;1080p&quot;</span><span class="p">]</span>
+    
+    <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">resolutions</span><span class="p">:</span>
+        <span class="n">transcoded_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">res</span><span class="si">}{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">transcoded_file</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">transcoded_file</span><span class="p">)</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Videoflix</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Fabian.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

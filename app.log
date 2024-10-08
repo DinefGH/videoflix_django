@@ -1,0 +1,469 @@
+Watching for file changes with StatReloader
+Bad Request: /login/
+"POST /login/ HTTP/1.1" 400 31
+"POST /register/ HTTP/1.1" 201 91
+"GET /verify-email/Nw/ce9klf-78d38ab89c76e25a0db2737e71ea2abe/ HTTP/1.1" 200 23639
+Bad Request: /login/
+"POST /login/ HTTP/1.1" 400 31
+Watching for file changes with StatReloader
+"GET /admin HTTP/1.1" 301 0
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 17350
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+"GET /static/admin/css/login.css HTTP/1.1" 200 951
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2804
+"GET /static/admin/css/base.css HTTP/1.1" 200 22092
+"GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 200 16675
+"GET /static/admin/css/responsive.css HTTP/1.1" 200 17972
+"GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+"GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 14601
+"GET /static/debug_toolbar/css/print.css HTTP/1.1" 200 43
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+"GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 4742
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 17349
+"POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+"GET /admin/ HTTP/1.1" 200 24239
+"GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+"OPTIONS /login/ HTTP/1.1" 200 0
+"OPTIONS /login/ HTTP/1.1" 200 0
+Forbidden: /login/
+"POST /login/ HTTP/1.1" 403 108
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videoflixbackend\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Bad Request: /login/
+"POST /login/ HTTP/1.1" 400 31
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videflix\views.py changed, reloading.
+Watching for file changes with StatReloader
+"OPTIONS /login/ HTTP/1.1" 200 0
+Bad Request: /login/
+"POST /login/ HTTP/1.1" 400 31
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videflix\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videflix\models.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videflix\views.py", line 163, in post
+    ip_address=self.get_client_ip(request),
+               ^^^^^^^^^^^^^^^^^^
+AttributeError: 'LoginView' object has no attribute 'get_client_ip'
+"POST /login/ HTTP/1.1" 500 113523
+Watching for file changes with StatReloader
+Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videflix\views.py", line 163, in post
+    ip_address=self.get_client_ip(request),
+               ^^^^^^^^^^^^^^^^^^
+AttributeError: 'LoginView' object has no attribute 'get_client_ip'
+"POST /login/ HTTP/1.1" 500 113523
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videflix\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /login/ HTTP/1.1" 200 512
+"GET /api/videos-by-category/ HTTP/1.1" 200 2
+Not Found: /
+"GET / HTTP/1.1" 404 17449
+"GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 200 16675
+"GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 14601
+"GET /static/debug_toolbar/css/print.css HTTP/1.1" 200 43
+"GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 4742
+"GET /admin HTTP/1.1" 301 0
+"GET /admin/ HTTP/1.1" 200 24247
+"GET /static/admin/css/base.css HTTP/1.1" 200 22092
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2804
+"GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+"GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+"GET /static/admin/css/responsive.css HTTP/1.1" 200 17972
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+"GET /admin/videflix/customuser/ HTTP/1.1" 200 31529
+"GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+"GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+"GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9097
+"GET /static/admin/js/core.js HTTP/1.1" 200 6208
+"GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+"GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+"GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+"GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+"GET /static/admin/img/search.svg HTTP/1.1" 200 458
+"GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+"GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+"GET /static/admin/js/filters.js HTTP/1.1" 200 978
+"GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+"GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+"GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+"GET /admin/videflix/loginhistory/ HTTP/1.1" 200 28453
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/videflix/profile/ HTTP/1.1" 200 29345
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/videflix/video/ HTTP/1.1" 200 25769
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/videflix/customuser/ HTTP/1.1" 200 31528
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/token_blacklist/outstandingtoken/ HTTP/1.1" 200 26366
+"GET /admin/token_blacklist/blacklistedtoken/ HTTP/1.1" 200 24697
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/auth/group/ HTTP/1.1" 200 24577
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/authtoken/token/ HTTP/1.1" 200 24467
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/authtoken/tokenproxy/ HTTP/1.1" 200 24659
+"OPTIONS /api/token/refresh/ HTTP/1.1" 200 0
+Watching for file changes with StatReloader
+Not Found: /
+"GET / HTTP/1.1" 404 17449
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 17511
+"GET /admin HTTP/1.1" 301 0
+"GET /admin/ HTTP/1.1" 200 24248
+"GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+"GET /admin/videflix/video/ HTTP/1.1" 200 25769
+"GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+"GET /static/admin/js/core.js HTTP/1.1" 200 6208
+"GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+"GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9097
+"GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+"GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+"GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+"GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+"GET /static/admin/img/search.svg HTTP/1.1" 200 458
+"GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+"GET /static/admin/js/filters.js HTTP/1.1" 200 978
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+"GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+"GET /admin/videflix/video/add/ HTTP/1.1" 200 29976
+"GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+"GET /static/admin/css/forms.css HTTP/1.1" 200 8710
+"GET /static/admin/css/widgets.css HTTP/1.1" 200 11564
+"GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/videflix/video/add/ HTTP/1.1" 302 0
+"GET /admin/videflix/video/ HTTP/1.1" 200 27626
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+"GET /admin/videflix/customuser/ HTTP/1.1" 200 31529
+"GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+"OPTIONS /login/ HTTP/1.1" 200 0
+"OPTIONS /login/ HTTP/1.1" 200 0
+"POST /login/ HTTP/1.1" 200 512
+"GET /api/videos-by-category/ HTTP/1.1" 200 582
+"GET /media/videos/Videoflix_Fuji_1080p.mp4 HTTP/1.1" 200 7196645
+"OPTIONS /logout/ HTTP/1.1" 200 0
+"POST /logout/ HTTP/1.1" 200 37
+Internal Server Error: /admin/videflix/customuser/7/change/
+Traceback (most recent call last):
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\contrib\admin\options.py", line 839, in get_form
+    return modelform_factory(self.model, **defaults)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\forms\models.py", line 654, in modelform_factory
+    return type(form)(class_name, (form,), form_class_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\forms\models.py", line 312, in __new__
+    fields = fields_for_model(
+             ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\forms\models.py", line 207, in fields_for_model
+    raise FieldError(
+django.core.exceptions.FieldError: 'date_joined' cannot be specified for CustomUser model form as it is a non-editable field
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\contrib\admin\options.py", line 718, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\contrib\admin\sites.py", line 241, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\contrib\admin\options.py", line 1964, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\contrib\admin\options.py", line 1820, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\contrib\admin\options.py", line 1855, in _changeform_view
+    ModelForm = self.get_form(
+                ^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\contrib\auth\admin.py", line 98, in get_form
+    return super().get_form(request, obj, **defaults)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\env\Lib\site-packages\django\contrib\admin\options.py", line 841, in get_form
+    raise FieldError(
+django.core.exceptions.FieldError: 'date_joined' cannot be specified for CustomUser model form as it is a non-editable field. Check fields/fieldsets/exclude attributes of class CustomUserAdmin.
+"GET /admin/videflix/customuser/7/change/ HTTP/1.1" 500 180166
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videflix\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videflix\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videflix\admin.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /admin/videflix/customuser/7/change/ HTTP/1.1" 200 37260
+"GET /static/admin/js/SelectBox.js HTTP/1.1" 200 4530
+"GET /static/admin/js/SelectFilter2.js HTTP/1.1" 200 15502
+"GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+"GET /static/admin/js/calendar.js HTTP/1.1" 200 9141
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/icon-unknown.svg HTTP/1.1" 200 655
+"GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+"GET /static/admin/img/icon-unknown-alt.svg HTTP/1.1" 200 655
+"GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+"GET /static/admin/img/selector-icons.svg HTTP/1.1" 200 3291
+"GET /admin/videflix/customuser/ HTTP/1.1" 200 31529
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videflix\admin.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /admin/videflix/customuser/ HTTP/1.1" 200 32202
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+Watching for file changes with StatReloader
+Not Found: /
+"GET / HTTP/1.1" 404 17449
+"GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 200 16675
+"GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 14601
+"GET /static/debug_toolbar/css/print.css HTTP/1.1" 200 43
+"GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 4742
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 17511
+"GET /admin HTTP/1.1" 301 0
+"GET /admin/ HTTP/1.1" 200 24622
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2804
+"GET /static/admin/css/base.css HTTP/1.1" 200 22092
+"GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+"GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+"GET /static/admin/css/responsive.css HTTP/1.1" 200 17972
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+"GET /admin/videflix/customuser/ HTTP/1.1" 200 31750
+"GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+"GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+"GET /static/admin/js/core.js HTTP/1.1" 200 6208
+"GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9097
+"GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+"GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+"GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+"GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+"GET /static/admin/img/search.svg HTTP/1.1" 200 458
+"GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+"GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/js/filters.js HTTP/1.1" 200 978
+"GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+"GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+"GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+"GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+Watching for file changes with StatReloader
+"GET /admin/ HTTP/1.1" 200 24622
+"POST /admin/logout/ HTTP/1.1" 200 16742
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 17355
+"GET /static/admin/css/login.css HTTP/1.1" 200 951
+"POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+"GET /admin/ HTTP/1.1" 200 24246
+"GET /admin/videflix/customuser/ HTTP/1.1" 200 32266
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+Watching for file changes with StatReloader
+"OPTIONS //login/ HTTP/1.1" 200 0
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videoflixbackend\settings.py changed, reloading.
+Watching for file changes with StatReloader
+"OPTIONS /login/ HTTP/1.1" 200 0
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videflix\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videflix\views.py changed, reloading.
+Watching for file changes with StatReloader
+"OPTIONS /login/ HTTP/1.1" 200 0
+"POST /login/ HTTP/1.1" 200 512
+"POST /login/ HTTP/1.1" 200 512
+"OPTIONS /api/videos-by-category/ HTTP/1.1" 200 0
+"GET /api/videos-by-category/ HTTP/1.1" 200 582
+Not Found: /media/videos/Videoflix_Fuji_1080p.mp4
+"GET /media/videos/Videoflix_Fuji_1080p.mp4 HTTP/1.1" 404 17889
+"OPTIONS /logout/ HTTP/1.1" 200 0
+"POST /logout/ HTTP/1.1" 200 37
+Watching for file changes with StatReloader
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videoflixbackend\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videoflixbackend\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Home\DeveloperAkademie2\videoflix\videoflix-django-backend\videoflixbackend\videflix\tasks.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /
+"GET / HTTP/1.1" 404 17449
+"GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 200 16675
+"GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 14601
+"GET /static/debug_toolbar/css/print.css HTTP/1.1" 200 43
+"GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 4742
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 17511
+"GET /admin HTTP/1.1" 301 0
+"GET /admin/ HTTP/1.1" 200 24248
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2804
+"GET /static/admin/css/base.css HTTP/1.1" 200 22092
+"GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+"GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+"GET /static/admin/css/responsive.css HTTP/1.1" 200 17972
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+"GET /admin/videflix/video/ HTTP/1.1" 200 27431
+"GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+"GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+"GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+"GET /static/admin/js/core.js HTTP/1.1" 200 6208
+"GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+"GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9097
+"GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+"GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+"GET /static/admin/img/search.svg HTTP/1.1" 200 458
+"GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+"GET /static/admin/js/filters.js HTTP/1.1" 200 978
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+"GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+"GET /admin/videflix/video/add/ HTTP/1.1" 200 29977
+"GET /static/admin/css/forms.css HTTP/1.1" 200 8710
+"GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+"GET /static/admin/css/widgets.css HTTP/1.1" 200 11564
+"GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/videflix/video/add/ HTTP/1.1" 302 0
+"GET /admin/videflix/video/ HTTP/1.1" 200 27790
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/videflix/video/ HTTP/1.1" 200 24322
+"GET /static/admin/js/cancel.js HTTP/1.1" 200 884
+"POST /admin/videflix/video/ HTTP/1.1" 302 0
+"GET /admin/videflix/video/ HTTP/1.1" 200 27430
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/videflix/video/add/ HTTP/1.1" 200 29976
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/videflix/video/add/ HTTP/1.1" 302 0
+"GET /admin/videflix/video/ HTTP/1.1" 200 27790
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/videflix/video/3/change/ HTTP/1.1" 200 31841
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/videflix/video/ HTTP/1.1" 200 27789
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/videflix/video/add/ HTTP/1.1" 200 29976
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/videflix/video/add/ HTTP/1.1" 302 0
+"GET /admin/videflix/video/ HTTP/1.1" 200 28141
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/videflix/video/add/ HTTP/1.1" 200 29976
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/videflix/video/add/ HTTP/1.1" 302 0
+"GET /admin/videflix/video/ HTTP/1.1" 200 28491
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+Bad Request: /verify-email/MQ/invalid-token/
+Bad Request: /verify-email/OTk5OTk5/celcld-3e2a4f4592479b63b0106e9c46b7222d/
+Bad Request: /login/
+Bad Request: /login/
+Bad Request: /reset-password/MQ/invalid-token/
+Bad Request: /reset-password/OTk5/celclg-b90626ff1f5c5d9c57e527f93040623e/
+Bad Request: /reset-password/MQ/celclg-cf7fbf817cc51981f436bccc45b74a26/
+Bad Request: /password-reset/
+Not Found: /password-reset/
+Bad Request: /register/
+Bad Request: /register/
+Not Found: /api/videos/9999/
+Bad Request: /verify-email/MQ/invalid-token/
+Bad Request: /verify-email/OTk5OTk5/celcte-1b0f4af0382827496be510cfeb7b6c4c/
+Bad Request: /login/
+Bad Request: /login/
+Bad Request: /reset-password/MQ/invalid-token/
+Bad Request: /reset-password/OTk5/celcth-557a306e6c5835c49c58bfef3784b6fe/
+Bad Request: /reset-password/MQ/celcth-a2afe582e885cd585d758dd77c0c6a34/
+Bad Request: /password-reset/
+Not Found: /password-reset/
+Bad Request: /register/
+Bad Request: /register/
+Not Found: /api/videos/9999/
+Bad Request: /verify-email/MQ/invalid-token/
+Bad Request: /verify-email/OTk5OTk5/celcvi-f2ab49e4ccebeadef05680259214a87a/
+Bad Request: /login/
+Bad Request: /login/
+Bad Request: /reset-password/MQ/invalid-token/
+Bad Request: /reset-password/OTk5/celcvl-30a51e24b5d0300a974312974ec7c1cc/
+Bad Request: /reset-password/MQ/celcvl-1adf42f00ef05e2bfca2fa3bf86f0bd2/
+Bad Request: /password-reset/
+Not Found: /password-reset/
+Bad Request: /register/
+Bad Request: /register/
+Not Found: /api/videos/9999/

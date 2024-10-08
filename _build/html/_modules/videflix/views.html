@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>videflix.views &#8212; Videoflix 03.10.2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=12dfc556" />
+    <script src="../../_static/documentation_options.js?v=4e3e0493"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for videflix.views</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="kn">import</span> <span class="n">send_mail</span>
+<span class="kn">from</span> <span class="nn">django.utils.http</span> <span class="kn">import</span> <span class="n">urlsafe_base64_encode</span>
+<span class="kn">from</span> <span class="nn">django.utils.encoding</span> <span class="kn">import</span> <span class="n">force_bytes</span>
+<span class="kn">from</span> <span class="nn">django.contrib.sites.shortcuts</span> <span class="kn">import</span> <span class="n">get_current_site</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">.tokens</span> <span class="kn">import</span> <span class="n">account_activation_token</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">status</span>
+<span class="kn">from</span> <span class="nn">rest_framework.response</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">rest_framework.views</span> <span class="kn">import</span> <span class="n">APIView</span>
+<span class="kn">from</span> <span class="nn">.serializers</span> <span class="kn">import</span> <span class="n">UserRegistrationSerializer</span>
+<span class="kn">from</span> <span class="nn">django.utils.http</span> <span class="kn">import</span> <span class="n">urlsafe_base64_decode</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">get_user_model</span>
+<span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="kn">import</span> <span class="n">EmailMultiAlternatives</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="kn">import</span> <span class="n">render_to_string</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">authenticate</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">JsonResponse</span>
+<span class="kn">from</span> <span class="nn">rest_framework.authtoken.models</span> <span class="kn">import</span> <span class="n">Token</span>
+<span class="kn">from</span> <span class="nn">django.utils.decorators</span> <span class="kn">import</span> <span class="n">method_decorator</span>
+<span class="kn">from</span> <span class="nn">django.views.decorators.csrf</span> <span class="kn">import</span> <span class="n">csrf_exempt</span><span class="p">,</span> <span class="n">ensure_csrf_cookie</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">LoginHistory</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.tokens</span> <span class="kn">import</span> <span class="n">default_token_generator</span>
+<span class="kn">from</span> <span class="nn">django.core.cache.backends.base</span> <span class="kn">import</span> <span class="n">DEFAULT_TIMEOUT</span>
+<span class="kn">from</span> <span class="nn">django.views.decorators.cache</span> <span class="kn">import</span> <span class="n">cache_page</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Video</span>
+<span class="kn">from</span> <span class="nn">.serializers</span> <span class="kn">import</span> <span class="n">VideoSerializer</span>
+
+
+<span class="n">CACHE_TTL</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s1">&#39;CACHE_TTL&#39;</span><span class="p">,</span> <span class="n">DEFAULT_TIMEOUT</span><span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;password_reset&#39;</span><span class="p">)</span>
+
+
+
+<span class="n">User</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span>
+
+<div class="viewcode-block" id="UserRegistrationView">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.UserRegistrationView">[docs]</a>
+<span class="k">class</span> <span class="nc">UserRegistrationView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles user registration by creating a new user and sending a verification email.</span>
+
+<span class="sd">    This view accepts user details (email, password) and registers the user, </span>
+<span class="sd">    marking them as inactive until email verification is completed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="UserRegistrationView.post">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.UserRegistrationView.post">[docs]</a>
+    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Registers a new user.</span>
+
+<span class="sd">        Validates the request data, saves the new user as inactive, and sends a verification email.</span>
+<span class="sd">        If the data is invalid, returns a 400 Bad Request with error details.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Response: 201 Created on success, 400 Bad Request on failure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">serializer</span> <span class="o">=</span> <span class="n">UserRegistrationSerializer</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">serializer</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">serializer</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_verification_email</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;User registered successfully! Please check your email to verify your account.&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_201_CREATED</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">errors</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserRegistrationView.send_verification_email">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.UserRegistrationView.send_verification_email">[docs]</a>
+    <span class="k">def</span> <span class="nf">send_verification_email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends an email verification to the newly registered user.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user: The user object for which the verification email is being sent.</span>
+<span class="sd">            request: The original request to construct the verification URL.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">account_activation_token</span><span class="o">.</span><span class="n">make_token</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">urlsafe_base64_encode</span><span class="p">(</span><span class="n">force_bytes</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">pk</span><span class="p">))</span>
+
+        <span class="n">current_site</span> <span class="o">=</span> <span class="n">get_current_site</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">verification_link</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;email_verify&#39;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;uidb64&#39;</span><span class="p">:</span> <span class="n">uid</span><span class="p">,</span> <span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">})</span>
+
+        <span class="n">verification_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;http://</span><span class="si">{</span><span class="n">current_site</span><span class="o">.</span><span class="n">domain</span><span class="si">}{</span><span class="n">verification_link</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="n">subject</span> <span class="o">=</span> <span class="s1">&#39;Verify your email address&#39;</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+            <span class="s1">&#39;verification_url&#39;</span><span class="p">:</span> <span class="n">verification_url</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Render HTML content</span>
+        <span class="n">html_content</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;emails/verification_email.html&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="n">text_content</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Dear </span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">Please click the link below to verify your email:</span><span class="se">\n</span><span class="si">{</span><span class="n">verification_url</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Create the email</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="n">EmailMultiAlternatives</span><span class="p">(</span>
+            <span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span>
+            <span class="n">body</span><span class="o">=</span><span class="n">text_content</span><span class="p">,</span> 
+            <span class="n">from_email</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">DEFAULT_FROM_EMAIL</span><span class="p">,</span>
+            <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="n">email</span><span class="o">.</span><span class="n">attach_alternative</span><span class="p">(</span><span class="n">html_content</span><span class="p">,</span> <span class="s2">&quot;text/html&quot;</span><span class="p">)</span>
+        <span class="n">email</span><span class="o">.</span><span class="n">send</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="VerifyEmailView">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.VerifyEmailView">[docs]</a>
+<span class="k">class</span> <span class="nc">VerifyEmailView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Verifies the user&#39;s email using the token sent during registration.</span>
+
+<span class="sd">    If the token is valid, the user account is activated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="VerifyEmailView.get">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.VerifyEmailView.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">uidb64</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Verifies the email using the UID and token.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uidb64: Base64-encoded user ID.</span>
+<span class="sd">            token: Token used for account verification.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Response: 200 OK on success, 400 Bad Request if token is invalid or expired.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">uid</span> <span class="o">=</span> <span class="n">urlsafe_base64_decode</span><span class="p">(</span><span class="n">uidb64</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">uid</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">OverflowError</span><span class="p">,</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">):</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">account_activation_token</span><span class="o">.</span><span class="n">check_token</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="kc">True</span> 
+            <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Email verified successfully!&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid or expired token.&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span></div>
+</div>
+
+            
+
+
+
+<div class="viewcode-block" id="LoginView">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.LoginView">[docs]</a>
+<span class="k">class</span> <span class="nc">LoginView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Authenticates a user and generates an authentication token.</span>
+
+<span class="sd">    This view validates user credentials and generates a token for further API access.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LoginView.post">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.LoginView.post">[docs]</a>
+    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Authenticates a user and returns an authentication token.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            request: The incoming request containing user credentials.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Response: 200 OK if login is successful, 400 Bad Request if invalid credentials are provided.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">)</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">)</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">token</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">Token</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+
+            <span class="n">LoginHistory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span>
+                <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="o">.</span><span class="n">key</span><span class="p">,</span>
+                <span class="n">ip_address</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_client_ip</span><span class="p">(</span><span class="n">request</span><span class="p">),</span>
+                <span class="n">user_agent</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_USER_AGENT&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Login successful&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span>
+                <span class="n">key</span><span class="o">=</span><span class="s1">&#39;auth_token&#39;</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="n">token</span><span class="o">.</span><span class="n">key</span><span class="p">,</span>
+                <span class="n">httponly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">secure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">samesite</span><span class="o">=</span><span class="s1">&#39;Lax&#39;</span> 
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">response</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid credentials&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span></div>
+
+        
+
+<div class="viewcode-block" id="LoginView.get_client_ip">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.LoginView.get_client_ip">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_client_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extracts the client&#39;s IP address from the request headers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            request: The request from which the IP is extracted.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The client&#39;s IP address.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x_forwarded_for</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_X_FORWARDED_FOR&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x_forwarded_for</span><span class="p">:</span>
+            <span class="n">ip</span> <span class="o">=</span> <span class="n">x_forwarded_for</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ip</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ip</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="LogoutView">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.LogoutView">[docs]</a>
+<span class="k">class</span> <span class="nc">LogoutView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Logs out the user by deleting the authentication token.</span>
+
+<span class="sd">    This view ensures the user is logged out by invalidating the token and clearing the auth cookie.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LogoutView.post">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.LogoutView.post">[docs]</a>
+    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Logs the user out by deleting their token.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            request: The request containing the token in cookies.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Response: 200 OK on success.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">token_key</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">COOKIES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;auth_token&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">token_key</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="n">Token</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">token_key</span><span class="p">)</span>
+                <span class="n">token</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+            <span class="k">except</span> <span class="n">Token</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Logged out successfully&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">delete_cookie</span><span class="p">(</span><span class="s1">&#39;auth_token&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span></div>
+</div>
+
+    
+    
+    
+
+
+<div class="viewcode-block" id="CSRFTokenView">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.CSRFTokenView">[docs]</a>
+<span class="nd">@method_decorator</span><span class="p">(</span><span class="n">csrf_exempt</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;dispatch&#39;</span><span class="p">)</span>
+<span class="nd">@method_decorator</span><span class="p">(</span><span class="n">ensure_csrf_cookie</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;dispatch&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">CSRFTokenView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides the CSRF token required for state-changing requests.</span>
+
+<span class="sd">    This view sets the CSRF token as a cookie and responds with a message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">authentication_classes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="CSRFTokenView.get">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.CSRFTokenView.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends a CSRF token in a cookie.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            request: The incoming request.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Response: 200 OK when the CSRF token is successfully set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;CSRF cookie set&#39;</span><span class="p">})</span></div>
+</div>
+
+    
+
+
+
+<div class="viewcode-block" id="PasswordResetRequestView">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.PasswordResetRequestView">[docs]</a>
+<span class="k">class</span> <span class="nc">PasswordResetRequestView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles password reset requests by sending a reset email.</span>
+
+<span class="sd">    This view generates a password reset token and sends it to the user via email.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PasswordResetRequestView.post">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.PasswordResetRequestView.post">[docs]</a>
+    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a password reset token and sends it via email.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            request: The incoming request with the user&#39;s email.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Response: 200 OK if email is sent, 404 Not Found if the user doesn&#39;t exist, or 500 Internal Server Error if there&#39;s an issue.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Password reset request received.&quot;</span><span class="p">)</span>
+        
+        <span class="n">email</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">email</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Password reset requested without an email.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Email is required&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Password reset requested for non-existent email: </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;User with this email does not exist&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_404_NOT_FOUND</span><span class="p">)</span>
+        
+        <span class="n">token</span> <span class="o">=</span> <span class="n">default_token_generator</span><span class="o">.</span><span class="n">make_token</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">urlsafe_base64_encode</span><span class="p">(</span><span class="n">force_bytes</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">pk</span><span class="p">))</span>
+        
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Password reset token generated for user </span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="n">reset_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">settings</span><span class="o">.</span><span class="n">FRONTEND_URL</span><span class="si">}</span><span class="s2">/reset-password/</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span>
+        
+        <span class="n">email_body</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;emails/password_reset_email.html&#39;</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+            <span class="s1">&#39;reset_url&#39;</span><span class="p">:</span> <span class="n">reset_url</span><span class="p">,</span>
+        <span class="p">})</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">send_mail</span><span class="p">(</span>
+                <span class="n">subject</span><span class="o">=</span><span class="s1">&#39;Password Reset Request&#39;</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="n">email_body</span><span class="p">,</span>
+                <span class="n">from_email</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">DEFAULT_FROM_EMAIL</span><span class="p">,</span>
+                <span class="n">recipient_list</span><span class="o">=</span><span class="p">[</span><span class="n">email</span><span class="p">],</span>
+                <span class="n">html_message</span><span class="o">=</span><span class="n">email_body</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Password reset email sent to </span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error sending password reset email to </span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Error sending password reset email&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_500_INTERNAL_SERVER_ERROR</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Password reset email sent&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span><span class="p">)</span></div>
+</div>
+
+    
+
+    
+
+<div class="viewcode-block" id="PasswordResetConfirmView">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.PasswordResetConfirmView">[docs]</a>
+<span class="k">class</span> <span class="nc">PasswordResetConfirmView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Resets the user&#39;s password after verifying the token.</span>
+
+<span class="sd">    This view allows the user to reset their password by providing a valid token and new password.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PasswordResetConfirmView.post">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.PasswordResetConfirmView.post">[docs]</a>
+    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">uidb64</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets the user&#39;s password if the token is valid.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uidb64: Base64-encoded user ID.</span>
+<span class="sd">            token: Token used for password reset.</span>
+<span class="sd">            request: The request containing the new password.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Response: 200 OK on success, 400 Bad Request if token or data is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">uid</span> <span class="o">=</span> <span class="n">urlsafe_base64_decode</span><span class="p">(</span><span class="n">uidb64</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">uid</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">OverflowError</span><span class="p">,</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Invalid user&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">default_token_generator</span><span class="o">.</span><span class="n">check_token</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Invalid token&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span>
+        
+        <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">)</span>
+        <span class="n">confirm_password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;confirm_password&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">password</span> <span class="ow">or</span> <span class="n">password</span> <span class="o">!=</span> <span class="n">confirm_password</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Passwords do not match&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span>
+
+        <span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Password reset successful&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span><span class="p">)</span></div>
+</div>
+
+    
+
+<div class="viewcode-block" id="VideosByCategoryView">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.VideosByCategoryView">[docs]</a>
+<span class="k">class</span> <span class="nc">VideosByCategoryView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lists all videos, grouped by category.</span>
+
+<span class="sd">    This view returns videos categorized under different categories.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="VideosByCategoryView.get">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.VideosByCategoryView.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches videos grouped by their category.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            request: The incoming request.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Response: 200 OK with the list of categories and their respective videos.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="n">Video</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+            <span class="n">videos</span> <span class="o">=</span> <span class="n">Video</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+            <span class="n">serializer</span> <span class="o">=</span> <span class="n">VideoSerializer</span><span class="p">(</span><span class="n">videos</span><span class="p">,</span> <span class="n">many</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;request&#39;</span><span class="p">:</span> <span class="n">request</span><span class="p">})</span>
+
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="n">category</span><span class="p">,</span>
+                <span class="s1">&#39;videos&#39;</span><span class="p">:</span> <span class="n">serializer</span><span class="o">.</span><span class="n">data</span>
+            <span class="p">})</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="VideoDetailView">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.VideoDetailView">[docs]</a>
+<span class="k">class</span> <span class="nc">VideoDetailView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides details of a single video.</span>
+
+<span class="sd">    This view returns all details related to a specific video.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="VideoDetailView.get">
+<a class="viewcode-back" href="../../docs/source/videflix.html#videflix.views.VideoDetailView.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches details of a specific video by its primary key.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pk: The primary key of the video.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Response: 200 OK if the video is found, 404 Not Found if the video doesn&#39;t exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">video</span> <span class="o">=</span> <span class="n">Video</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+            <span class="n">serializer</span> <span class="o">=</span> <span class="n">VideoSerializer</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;request&#39;</span><span class="p">:</span> <span class="n">request</span><span class="p">})</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">Video</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Video not found&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Videoflix</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Fabian.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

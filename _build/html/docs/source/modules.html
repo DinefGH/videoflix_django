@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>videoflixbackend &#8212; Videoflix 03.10.2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=12dfc556" />
+    <script src="../../_static/documentation_options.js?v=4e3e0493"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="videoflixbackend">
+<h1>videoflixbackend<a class="headerlink" href="#videoflixbackend" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="conf.html">conf module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manage.html">manage module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manage.html#manage.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="videflix.html">videflix package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="videflix.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="videflix.migrations.html">videflix.migrations package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.migrations.html#module-videflix.migrations.0001_initial">videflix.migrations.0001_initial module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.migrations.html#module-videflix.migrations.0002_customuser_date_joined">videflix.migrations.0002_customuser_date_joined module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.migrations.html#module-videflix.migrations.0003_loginhistory">videflix.migrations.0003_loginhistory module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.migrations.html#module-videflix.migrations.0004_video">videflix.migrations.0004_video module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.migrations.html#module-videflix.migrations.0005_video_category">videflix.migrations.0005_video_category module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.migrations.html#module-videflix.migrations.0006_video_thumbnail">videflix.migrations.0006_video_thumbnail module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.migrations.html#module-videflix.migrations.0007_video_video_file_1080p_video_video_file_360p_and_more">videflix.migrations.0007_video_video_file_1080p_video_video_file_360p_and_more module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.migrations.html#module-videflix.migrations">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.tests.html">videflix.tests package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.tests.html#module-videflix.tests.test_models">videflix.tests.test_models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.tests.html#module-videflix.tests.test_serializers">videflix.tests.test_serializers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.tests.html#module-videflix.tests.test_signals">videflix.tests.test_signals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.tests.html#module-videflix.tests.test_views">videflix.tests.test_views module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.tests.html#module-videflix.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="videflix.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videflix.html#module-videflix.admin">videflix.admin module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.admin.CustomUserAdmin"><code class="docutils literal notranslate"><span class="pre">CustomUserAdmin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.CustomUserAdmin.add_fieldsets"><code class="docutils literal notranslate"><span class="pre">CustomUserAdmin.add_fieldsets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.CustomUserAdmin.fieldsets"><code class="docutils literal notranslate"><span class="pre">CustomUserAdmin.fieldsets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.CustomUserAdmin.list_display"><code class="docutils literal notranslate"><span class="pre">CustomUserAdmin.list_display</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.CustomUserAdmin.list_filter"><code class="docutils literal notranslate"><span class="pre">CustomUserAdmin.list_filter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.CustomUserAdmin.media"><code class="docutils literal notranslate"><span class="pre">CustomUserAdmin.media</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.CustomUserAdmin.ordering"><code class="docutils literal notranslate"><span class="pre">CustomUserAdmin.ordering</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.CustomUserAdmin.search_fields"><code class="docutils literal notranslate"><span class="pre">CustomUserAdmin.search_fields</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.admin.LoginHistoryAdmin"><code class="docutils literal notranslate"><span class="pre">LoginHistoryAdmin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.LoginHistoryAdmin.list_display"><code class="docutils literal notranslate"><span class="pre">LoginHistoryAdmin.list_display</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.LoginHistoryAdmin.list_filter"><code class="docutils literal notranslate"><span class="pre">LoginHistoryAdmin.list_filter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.LoginHistoryAdmin.media"><code class="docutils literal notranslate"><span class="pre">LoginHistoryAdmin.media</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.admin.ProfileAdmin"><code class="docutils literal notranslate"><span class="pre">ProfileAdmin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.ProfileAdmin.list_display"><code class="docutils literal notranslate"><span class="pre">ProfileAdmin.list_display</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.ProfileAdmin.media"><code class="docutils literal notranslate"><span class="pre">ProfileAdmin.media</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.ProfileAdmin.search_fields"><code class="docutils literal notranslate"><span class="pre">ProfileAdmin.search_fields</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.admin.TokenAdmin"><code class="docutils literal notranslate"><span class="pre">TokenAdmin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.TokenAdmin.list_display"><code class="docutils literal notranslate"><span class="pre">TokenAdmin.list_display</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.TokenAdmin.media"><code class="docutils literal notranslate"><span class="pre">TokenAdmin.media</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.admin.VideoAdmin"><code class="docutils literal notranslate"><span class="pre">VideoAdmin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.VideoAdmin.list_display"><code class="docutils literal notranslate"><span class="pre">VideoAdmin.list_display</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.VideoAdmin.list_filter"><code class="docutils literal notranslate"><span class="pre">VideoAdmin.list_filter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.VideoAdmin.media"><code class="docutils literal notranslate"><span class="pre">VideoAdmin.media</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.VideoAdmin.search_fields"><code class="docutils literal notranslate"><span class="pre">VideoAdmin.search_fields</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.admin.VideoResource"><code class="docutils literal notranslate"><span class="pre">VideoResource</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.VideoResource.Meta"><code class="docutils literal notranslate"><span class="pre">VideoResource.Meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.admin.VideoResource.fields"><code class="docutils literal notranslate"><span class="pre">VideoResource.fields</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="videflix.html#module-videflix.apps">videflix.apps module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.apps.VideflixConfig"><code class="docutils literal notranslate"><span class="pre">VideflixConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.apps.VideflixConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">VideflixConfig.default_auto_field</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.apps.VideflixConfig.name"><code class="docutils literal notranslate"><span class="pre">VideflixConfig.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.apps.VideflixConfig.ready"><code class="docutils literal notranslate"><span class="pre">VideflixConfig.ready()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="videflix.html#module-videflix.authentication">videflix.authentication module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.authentication.CookieTokenAuthentication"><code class="docutils literal notranslate"><span class="pre">CookieTokenAuthentication</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.authentication.CookieTokenAuthentication.authenticate"><code class="docutils literal notranslate"><span class="pre">CookieTokenAuthentication.authenticate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="videflix.html#module-videflix.models">videflix.models module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.models.CustomUser"><code class="docutils literal notranslate"><span class="pre">CustomUser</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">CustomUser.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">CustomUser.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.REQUIRED_FIELDS"><code class="docutils literal notranslate"><span class="pre">CustomUser.REQUIRED_FIELDS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.USERNAME_FIELD"><code class="docutils literal notranslate"><span class="pre">CustomUser.USERNAME_FIELD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.auth_token"><code class="docutils literal notranslate"><span class="pre">CustomUser.auth_token</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.date_joined"><code class="docutils literal notranslate"><span class="pre">CustomUser.date_joined</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.email"><code class="docutils literal notranslate"><span class="pre">CustomUser.email</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.get_next_by_date_joined"><code class="docutils literal notranslate"><span class="pre">CustomUser.get_next_by_date_joined()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.get_previous_by_date_joined"><code class="docutils literal notranslate"><span class="pre">CustomUser.get_previous_by_date_joined()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.groups"><code class="docutils literal notranslate"><span class="pre">CustomUser.groups</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.id"><code class="docutils literal notranslate"><span class="pre">CustomUser.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.is_active"><code class="docutils literal notranslate"><span class="pre">CustomUser.is_active</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.is_staff"><code class="docutils literal notranslate"><span class="pre">CustomUser.is_staff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.is_superuser"><code class="docutils literal notranslate"><span class="pre">CustomUser.is_superuser</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.last_login"><code class="docutils literal notranslate"><span class="pre">CustomUser.last_login</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.logentry_set"><code class="docutils literal notranslate"><span class="pre">CustomUser.logentry_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.loginhistory_set"><code class="docutils literal notranslate"><span class="pre">CustomUser.loginhistory_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.objects"><code class="docutils literal notranslate"><span class="pre">CustomUser.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.password"><code class="docutils literal notranslate"><span class="pre">CustomUser.password</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.profile"><code class="docutils literal notranslate"><span class="pre">CustomUser.profile</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUser.user_permissions"><code class="docutils literal notranslate"><span class="pre">CustomUser.user_permissions</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.models.CustomUserManager"><code class="docutils literal notranslate"><span class="pre">CustomUserManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUserManager.create_user"><code class="docutils literal notranslate"><span class="pre">CustomUserManager.create_user()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.CustomUserManager.create_superuser"><code class="docutils literal notranslate"><span class="pre">CustomUserManager.create_superuser()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#id0"><code class="docutils literal notranslate"><span class="pre">CustomUserManager.create_superuser()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#id1"><code class="docutils literal notranslate"><span class="pre">CustomUserManager.create_user()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.models.LoginHistory"><code class="docutils literal notranslate"><span class="pre">LoginHistory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.LoginHistory.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">LoginHistory.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.LoginHistory.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">LoginHistory.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.LoginHistory.get_next_by_timestamp"><code class="docutils literal notranslate"><span class="pre">LoginHistory.get_next_by_timestamp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.LoginHistory.get_previous_by_timestamp"><code class="docutils literal notranslate"><span class="pre">LoginHistory.get_previous_by_timestamp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.LoginHistory.id"><code class="docutils literal notranslate"><span class="pre">LoginHistory.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.LoginHistory.ip_address"><code class="docutils literal notranslate"><span class="pre">LoginHistory.ip_address</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.LoginHistory.objects"><code class="docutils literal notranslate"><span class="pre">LoginHistory.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.LoginHistory.timestamp"><code class="docutils literal notranslate"><span class="pre">LoginHistory.timestamp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.LoginHistory.token"><code class="docutils literal notranslate"><span class="pre">LoginHistory.token</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.LoginHistory.user"><code class="docutils literal notranslate"><span class="pre">LoginHistory.user</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.LoginHistory.user_agent"><code class="docutils literal notranslate"><span class="pre">LoginHistory.user_agent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.LoginHistory.user_id"><code class="docutils literal notranslate"><span class="pre">LoginHistory.user_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.models.Profile"><code class="docutils literal notranslate"><span class="pre">Profile</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Profile.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Profile.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Profile.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Profile.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Profile.bio"><code class="docutils literal notranslate"><span class="pre">Profile.bio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Profile.birth_date"><code class="docutils literal notranslate"><span class="pre">Profile.birth_date</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Profile.id"><code class="docutils literal notranslate"><span class="pre">Profile.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Profile.location"><code class="docutils literal notranslate"><span class="pre">Profile.location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Profile.objects"><code class="docutils literal notranslate"><span class="pre">Profile.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Profile.user"><code class="docutils literal notranslate"><span class="pre">Profile.user</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Profile.user_id"><code class="docutils literal notranslate"><span class="pre">Profile.user_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.models.Video"><code class="docutils literal notranslate"><span class="pre">Video</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Video.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Video.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.category"><code class="docutils literal notranslate"><span class="pre">Video.category</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.created_at"><code class="docutils literal notranslate"><span class="pre">Video.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.description"><code class="docutils literal notranslate"><span class="pre">Video.description</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.get_next_by_created_at"><code class="docutils literal notranslate"><span class="pre">Video.get_next_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.get_previous_by_created_at"><code class="docutils literal notranslate"><span class="pre">Video.get_previous_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.id"><code class="docutils literal notranslate"><span class="pre">Video.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.objects"><code class="docutils literal notranslate"><span class="pre">Video.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.thumbnail"><code class="docutils literal notranslate"><span class="pre">Video.thumbnail</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.title"><code class="docutils literal notranslate"><span class="pre">Video.title</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.video_file"><code class="docutils literal notranslate"><span class="pre">Video.video_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.video_file_1080p"><code class="docutils literal notranslate"><span class="pre">Video.video_file_1080p</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.video_file_360p"><code class="docutils literal notranslate"><span class="pre">Video.video_file_360p</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.video_file_480p"><code class="docutils literal notranslate"><span class="pre">Video.video_file_480p</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.models.Video.video_file_720p"><code class="docutils literal notranslate"><span class="pre">Video.video_file_720p</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="videflix.html#module-videflix.probe">videflix.probe module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videflix.html#module-videflix.serializers">videflix.serializers module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.serializers.UserRegistrationSerializer"><code class="docutils literal notranslate"><span class="pre">UserRegistrationSerializer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.serializers.UserRegistrationSerializer.Meta"><code class="docutils literal notranslate"><span class="pre">UserRegistrationSerializer.Meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.serializers.UserRegistrationSerializer.create"><code class="docutils literal notranslate"><span class="pre">UserRegistrationSerializer.create()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.serializers.VideoSerializer"><code class="docutils literal notranslate"><span class="pre">VideoSerializer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.serializers.VideoSerializer.Meta"><code class="docutils literal notranslate"><span class="pre">VideoSerializer.Meta</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="videflix.html#module-videflix.signals">videflix.signals module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.signals.auto_delete_file_on_delete"><code class="docutils literal notranslate"><span class="pre">auto_delete_file_on_delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.signals.create_user_profile"><code class="docutils literal notranslate"><span class="pre">create_user_profile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.signals.save_user_profile"><code class="docutils literal notranslate"><span class="pre">save_user_profile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.signals.video_post_save"><code class="docutils literal notranslate"><span class="pre">video_post_save()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="videflix.html#module-videflix.tasks">videflix.tasks module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.tasks.convert_1080p"><code class="docutils literal notranslate"><span class="pre">convert_1080p()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.tasks.convert_360p"><code class="docutils literal notranslate"><span class="pre">convert_360p()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.tasks.convert_480p"><code class="docutils literal notranslate"><span class="pre">convert_480p()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.tasks.convert_720p"><code class="docutils literal notranslate"><span class="pre">convert_720p()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.tasks.convert_video"><code class="docutils literal notranslate"><span class="pre">convert_video()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.tasks.get_target_file"><code class="docutils literal notranslate"><span class="pre">get_target_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="videflix.html#module-videflix.tokens">videflix.tokens module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.tokens.AccountActivationTokenGenerator"><code class="docutils literal notranslate"><span class="pre">AccountActivationTokenGenerator</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="videflix.html#module-videflix.views">videflix.views module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.views.CSRFTokenView"><code class="docutils literal notranslate"><span class="pre">CSRFTokenView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.CSRFTokenView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">CSRFTokenView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.CSRFTokenView.dispatch"><code class="docutils literal notranslate"><span class="pre">CSRFTokenView.dispatch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.CSRFTokenView.get"><code class="docutils literal notranslate"><span class="pre">CSRFTokenView.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.CSRFTokenView.permission_classes"><code class="docutils literal notranslate"><span class="pre">CSRFTokenView.permission_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.views.LoginView"><code class="docutils literal notranslate"><span class="pre">LoginView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.LoginView.get_client_ip"><code class="docutils literal notranslate"><span class="pre">LoginView.get_client_ip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.LoginView.post"><code class="docutils literal notranslate"><span class="pre">LoginView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.views.LogoutView"><code class="docutils literal notranslate"><span class="pre">LogoutView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.LogoutView.post"><code class="docutils literal notranslate"><span class="pre">LogoutView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.views.PasswordResetConfirmView"><code class="docutils literal notranslate"><span class="pre">PasswordResetConfirmView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.PasswordResetConfirmView.post"><code class="docutils literal notranslate"><span class="pre">PasswordResetConfirmView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.views.PasswordResetRequestView"><code class="docutils literal notranslate"><span class="pre">PasswordResetRequestView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.PasswordResetRequestView.post"><code class="docutils literal notranslate"><span class="pre">PasswordResetRequestView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.views.UserRegistrationView"><code class="docutils literal notranslate"><span class="pre">UserRegistrationView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.UserRegistrationView.post"><code class="docutils literal notranslate"><span class="pre">UserRegistrationView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.UserRegistrationView.send_verification_email"><code class="docutils literal notranslate"><span class="pre">UserRegistrationView.send_verification_email()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.views.VerifyEmailView"><code class="docutils literal notranslate"><span class="pre">VerifyEmailView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.VerifyEmailView.get"><code class="docutils literal notranslate"><span class="pre">VerifyEmailView.get()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.views.VideoDetailView"><code class="docutils literal notranslate"><span class="pre">VideoDetailView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.VideoDetailView.get"><code class="docutils literal notranslate"><span class="pre">VideoDetailView.get()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="videflix.html#videflix.views.VideosByCategoryView"><code class="docutils literal notranslate"><span class="pre">VideosByCategoryView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="videflix.html#videflix.views.VideosByCategoryView.get"><code class="docutils literal notranslate"><span class="pre">VideosByCategoryView.get()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="videflix.html#module-videflix">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="videoflixbackend.html">videoflixbackend package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="videoflixbackend.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoflixbackend.html#module-videoflixbackend.asgi">videoflixbackend.asgi module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoflixbackend.html#module-videoflixbackend.settings">videoflixbackend.settings module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoflixbackend.html#module-videoflixbackend.urls">videoflixbackend.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoflixbackend.html#module-videoflixbackend.wsgi">videoflixbackend.wsgi module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoflixbackend.html#module-videoflixbackend">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Videoflix</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Fabian.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../../_sources/docs/source/modules.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
